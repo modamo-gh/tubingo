@@ -1,103 +1,260 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+
+const App = () => {
+  const [bingoCardText, setBingoCardText] = useState([
+    "Rabbit-hole channel",
+    "Wholesome content",
+    "Foreign language (not English)",
+    "Liminality",
+    "Potential cult leader",
+    "Rambler",
+    'presented with no context and "doesn\'t make sense"',
+    "Underrated video and/or creator",
+    "Recurring / Established character",
+    "Potential serial killer",
+    'presented with no context but still "makes sense"',
+    "Innovative idea / technology",
+    "Distorted / Bass boosted",
+    "I genuinely feel pity for this individual",
+    "Crappy music",
+    "Random animal spotted",
+    "Channel has over 20,000 uploads",
+    "FREE SPACE",
+    "I learned something new from this vid / channel",
+    "New lead discovery",
+    "Randomly nsfw",
+    "Angry human",
+    "Channel has over 5,000 uploads",
+    "Happy human",
+    "Conspiracy Theory"
+  ]);
+  const searchTerms = [
+    {
+      keyPhrase: "IMG",
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    },
+    {
+      keyPhrase: "MVI",
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    },
+    {
+      keyPhrase: `WIN ${new Date().getFullYear()}${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }, {
+      keyPhrase: `${new Date().getFullYear()}${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }, {
+      keyPhrase: `VID ${new Date().getFullYear()}${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }, {
+      keyPhrase: `${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}${new Date().getFullYear()}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }, {
+      keyPhrase: `Capture ${new Date().getFullYear()}${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }, {
+      keyPhrase: `${String(new Date().getDate()).padStart(
+        2,
+        "0"
+      )}${String(
+        new Date().getMonth() + 1
+      ).padStart(2, "0")}${new Date().getFullYear()}`,
+      searchParameter: "CAI%253D",
+      toString: function () {
+        return `${this.keyPhrase} ${this.searchParameter}`;
+      }
+    }
+  ];
+
+  const [searchTerm, setSearchTerm] = useState<{
+    keyPhrase: string;
+    searchParameter: string;
+    toString: () => string;
+  }>(searchTerms[Math.floor(Math.random() * searchTerms.length)]);
+
+  const [bingoCard, setBingoCard] = useState<boolean[][]>(
+    Array.from({ length: 5 }, () => Array.from({ length: 5 }))
+  );
+
+  const setCard = (bingoCardText: string[]) => {
+    const newBingoCard = [...bingoCard];
+
+    for (let row = 0; row < newBingoCard.length; row++) {
+      for (let column = 0; column < newBingoCard[row].length; column++) {
+        newBingoCard[row][column] =
+          bingoCardText[row * 5 + column] === "FREE SPACE";
+      }
+    }
+
+    setBingoCard(newBingoCard);
+  };
+
+  const shuffle = () => {
+    const newBingoCardText = [...bingoCardText];
+
+    for (let i = newBingoCardText.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [newBingoCardText[i], newBingoCardText[j]] = [
+        newBingoCardText[j],
+        newBingoCardText[i]
+      ];
+    }
+
+    setBingoCardText(newBingoCardText);
+
+    return newBingoCardText;
+  };
+
+  useEffect(() => {
+    setCard(shuffle());
+  }, []);
+
+  const checkForBingo = () => {
+    for (const row of bingoCard) {
+      if (row.every((cell) => cell)) {
+        console.log("Bingo!");
+      }
+    }
+
+    for (let column = 0; column < bingoCard.length; column++) {
+      if (bingoCard.every((_, index) => bingoCard[index][column])) {
+        console.log("Bingo!");
+      }
+    }
+
+    if (bingoCard.every((row, index) => row[index])) {
+      console.log("Bingo!");
+    }
+
+    if (bingoCard.every((row, index) => row[4 - index])) {
+      console.log("Bingo!");
+    }
+  };
+
+  const toggleCell = (index: number) => {
+    if (bingoCardText[index] !== "FREE SPACE") {
+      const newBingoCard = [...bingoCard];
+      const row = Math.floor(index / 5);
+      const column = index % 5;
+
+      newBingoCard[row][column] = !newBingoCard[row][column];
+
+      setBingoCard(newBingoCard);
+    }
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="bg-slate-800 flex flex-col md:flex-row h-screen gap-2 items-center justify-center p-2 w-screen">
+      <div className="flex flex-col flex-1 gap-2 h-full items-center justify-center w-full">
+        <div className="aspect-video w-full">
+          <iframe
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="rounded"
+            height="100%"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            width="100%"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          className="bg-slate-300 hover:bg-slate-400 cursor-pointer font-medium p-4 rounded text-slate-800 transition-colors"
+          onClick={() => {
+            const sT = searchTerms[
+              Math.floor(Math.random() * searchTerms.length)
+            ];
+            setSearchTerm(
+              sT
+            );
+            console.log(sT)
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          New Video
+        </button>
+      </div>
+      <div className="flex flex-col flex-1 gap-2 items-center justify-center">
+        <div className="aspect-square grid grid-cols-5 gap-2 max-h-[90vh]">
+          {bingoCardText.map((text, index) => {
+            return (
+              <div
+                className={`aspect-square ${bingoCard[Math.floor(index / 5)][index % 5]
+                  ? "bg-green-500 hover:bg-green-600"
+                  : "bg-slate-200 hover:bg-slate-300"
+                  } cursor-pointer flex items-center justify-center p-2 rounded`}
+                key={index}
+                onClick={() => {
+                  toggleCell(index);
+                  checkForBingo();
+                }}
+              >
+                <p
+                  className={`leading-tight text-center text-slate-800 text-[6px] md:text-[8px] lg:text-xs xl:text-lg`}
+                >
+                  {text}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <button
+          className="bg-slate-300 hover:bg-slate-400 cursor-pointer font-medium p-4 rounded text-slate-800 transition-colors"
+          onClick={() => {
+            setCard(shuffle());
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          Generate New Card
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default App;
