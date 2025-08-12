@@ -33,7 +33,7 @@ const App = () => {
 	]);
 
 	const [searchTerm, setSearchTerm] = useState<{
-		keyPhrase: string;
+		keyPhrase: string | (() => string);
 		searchParameter: string;
 		toString: () => string;
 	}>(searchTerms.old[Math.floor(Math.random() * searchTerms.old.length)]);
@@ -149,7 +149,7 @@ const App = () => {
 									)
 								];
 							setSearchTerm(sT);
-							console.log(sT);
+							console.log(sT.toString());
 						}}
 					>
 						Old Forgotten Video
