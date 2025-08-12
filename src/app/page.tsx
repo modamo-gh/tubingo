@@ -33,10 +33,9 @@ const App = () => {
 	]);
 
 	const [searchTerm, setSearchTerm] = useState<{
-		keyPhrase: string | (() => string);
+		getKeyPhrase: () => string;
 		searchParameter: string;
-		toString: () => string;
-	}>(searchTerms.old[Math.floor(Math.random() * searchTerms.old.length)]);
+	}>();
 
 	const [bingoCard, setBingoCard] = useState<boolean[][]>(
 		Array.from({ length: 5 }, () => Array.from({ length: 5 }))
@@ -110,47 +109,74 @@ const App = () => {
 		}
 	};
 
+	const [videoID, setVideoID] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleVideoButtonClick = async (sP: string) => {
+		setIsLoading(true);
+		setVideoID(null);
+
+		const filteredSearchTerms = searchTerms.filter(
+			(searchTerm) => searchTerm.searchParameter === sP
+		);
+		const sT =
+			filteredSearchTerms[
+			Math.floor(Math.random() * filteredSearchTerms.length)
+			];
+
+		setSearchTerm(sT);
+
+		try {
+			const params = new URLSearchParams({ query: sT.getKeyPhrase(), sp: sT.searchParameter })
+			const response = await fetch(
+				`/api/ytScraper/?${params.toString()}`
+			);
+			const searchResults = await response.json();
+			const videoIDs = await searchResults.videos;
+			const videoID =
+				videoIDs[Math.floor(Math.random() * videoIDs.length)];
+
+			setVideoID(videoID);
+		} catch (error) {
+			console.error("Error fetching video:", error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<div className="bg-slate-800 flex flex-col md:flex-row h-screen gap-2 items-center justify-center p-2 w-screen">
 			<div className="flex flex-col flex-1 gap-2 h-full items-center justify-center w-full">
 				<div className="aspect-video w-full">
-					<iframe
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowFullScreen
-						className="rounded"
-						height="100%"
-						src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-						width="100%"
-					/>
+					{videoID ? (
+						<iframe
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowFullScreen
+							className="rounded"
+							height="100%"
+							src={`https://www.youtube.com/embed/${videoID}`}
+							width="100%"
+						/>
+					) : (
+						<div className="bg-slate-500 flex items-center justify-center h-full rounded text-slate-800 w-full">
+							{isLoading ? (
+								<div className="animate-spin border-b-2 border-slate-300 h-12 rounded-full w-12" />
+							) : (
+								<p>Click below to get a new or old video</p>
+							)}
+						</div>
+					)}
 				</div>
 				<div className="flex justify-around w-full">
 					<button
 						className="bg-slate-300 hover:bg-slate-400 cursor-pointer font-medium p-4 rounded text-slate-800 transition-colors"
-						onClick={() => {
-							const sT =
-								searchTerms.old[
-									Math.floor(
-										Math.random() * searchTerms.old.length
-									)
-								];
-							setSearchTerm(sT);
-							console.log(sT);
-						}}
+						onClick={() => handleVideoButtonClick("CAISBAgCEAE=")}
 					>
 						Brand New Video
 					</button>
 					<button
 						className="bg-slate-300 hover:bg-slate-400 cursor-pointer font-medium p-4 rounded text-slate-800 transition-colors"
-						onClick={() => {
-							const sT =
-								searchTerms.new[
-									Math.floor(
-										Math.random() * searchTerms.new.length
-									)
-								];
-							setSearchTerm(sT);
-							console.log(sT.toString());
-						}}
+						onClick={() => handleVideoButtonClick("EgIQAQ==")}
 					>
 						Old Forgotten Video
 					</button>
@@ -161,11 +187,10 @@ const App = () => {
 					{bingoCardText.map((text, index) => {
 						return (
 							<div
-								className={`aspect-square ${
-									bingoCard[Math.floor(index / 5)][index % 5]
+								className={`aspect-square ${bingoCard[Math.floor(index / 5)][index % 5]
 										? "bg-green-500 hover:bg-green-600"
 										: "bg-slate-200 hover:bg-slate-300"
-								} cursor-pointer flex items-center justify-center p-2 rounded`}
+									} cursor-pointer flex items-center justify-center p-2 rounded`}
 								key={index}
 								onClick={() => {
 									toggleCell(index);
