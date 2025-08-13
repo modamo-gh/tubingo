@@ -2,6 +2,7 @@
 
 import { searchTerms } from "@/lib/searchTerms";
 import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
 
 const App = () => {
 	const [bingoCardText, setBingoCardText] = useState([
@@ -75,25 +76,36 @@ const App = () => {
 		setCard(shuffle());
 	}, []);
 
+	const [showConfetti, setShowConfetti] = useState(false);
+	const [hasBingo, setHasBingo] = useState(false);
+
 	const checkForBingo = () => {
+		let bingoDetected = false;
+
 		for (const row of bingoCard) {
 			if (row.every((cell) => cell)) {
-				console.log("Bingo!");
+				bingoDetected = true;
 			}
 		}
 
 		for (let column = 0; column < bingoCard.length; column++) {
 			if (bingoCard.every((_, index) => bingoCard[index][column])) {
-				console.log("Bingo!");
+				bingoDetected = true;
 			}
 		}
 
 		if (bingoCard.every((row, index) => row[index])) {
-			console.log("Bingo!");
+			bingoDetected = true;
 		}
 
 		if (bingoCard.every((row, index) => row[4 - index])) {
-			console.log("Bingo!");
+			bingoDetected = true;
+		}
+
+		if (bingoDetected) {
+			setHasBingo(true);
+			setShowConfetti(true);
+			setTimeout(() => setShowConfetti(false), 5000);
 		}
 	};
 
@@ -152,7 +164,7 @@ const App = () => {
 	return (
 		<div className="bg-slate-950 flex flex-col h-screen justify-center p-2 w-screen">
 			<div className="flex items-center pl-4 w-full">
-				<h1 className="flex-1 font-bold text-4xl">V I D G O</h1>
+				<h1 className="flex-1 font-bold text-4xl">T U B I N G O</h1>
 				<div className="flex flex-1 items-center justify-between max-w-[90vh] px-2">
 					<div className="bg-slate-800 flex gap-2 h-16 p-2 relative rounded-xl">
 						<div
@@ -178,8 +190,13 @@ const App = () => {
 						</button>
 					</div>
 					<button
-						className="bg-slate-800 hover:bg-slate-700 cursor-pointer flex font-medium h-16 items-center justify-center p-4 rounded-lg text-slate-300 transition-colors w-44"
+						className={`${
+							hasBingo
+								? "animate-pulse bg-emerald-600/70 hover:bg-emerald-600/80"
+								: "bg-slate-800 hover:bg-slate-700"
+						} cursor-pointer flex font-medium h-16 items-center justify-center p-4 rounded-lg text-slate-300 transition-colors w-44`}
 						onClick={() => {
+							setHasBingo(false);
 							setCard(shuffle());
 						}}
 					>
@@ -234,6 +251,14 @@ const App = () => {
 					</div>
 				</div>
 				<div className="flex flex-col flex-1 gap-2 items-center justify-center p-2 max-w-[90vh]">
+					{showConfetti && (
+						<Confetti
+							colors={["#10b981", "#34d399", "#6ee7b7"]}
+							gravity={0.3}
+							numberOfPieces={200}
+							recycle={false}
+						/>
+					)}
 					<div className="aspect-square bg-slate-950/60 border border-slate-800 grid grid-cols-5 gap-3 p-4 rounded-3xl w-full">
 						{bingoCardText.map((text, index) => {
 							return (
@@ -244,7 +269,11 @@ const App = () => {
 										]
 											? "bg-emerald-600/20 border-emerald-500"
 											: "bg-slate-900/60 border-slate-800 hover:border-emerald-400"
-									} cursor-pointer flex focus-visible:outline-none focus-visible:ring-2 items-center justify-center p-2 rounded-2xl transition-colors`}
+									} ${
+										hasBingo
+											? "pointer-events-none"
+											: "cursor-pointer"
+									} flex focus-visible:outline-none focus-visible:ring-2 items-center justify-center p-2 rounded-2xl transition-colors`}
 									key={index}
 									onClick={() => {
 										toggleCell(index);
