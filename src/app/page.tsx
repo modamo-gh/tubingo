@@ -1,10 +1,14 @@
 "use client";
 
-import { searchTerms } from "@/lib/searchTerms";
+import BingoCard from "@/../components/BingoCard";
+import { VideoType } from "@/../types/VideoType";
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
+import ControlsBar from "../../components/ControlsBar";
 
 const App = () => {
+	const [bingoCard, setBingoCard] = useState<boolean[][]>(
+		Array.from({ length: 5 }, () => Array.from({ length: 5 }))
+	);
 	const [bingoCardText, setBingoCardText] = useState([
 		"Rabbit-hole channel",
 		"Wholesome content",
@@ -32,15 +36,7 @@ const App = () => {
 		"Happy human",
 		"Conspiracy Theory"
 	]);
-
-	const [searchTerm, setSearchTerm] = useState<{
-		getKeyPhrase: () => string;
-		searchParameter: string;
-	}>();
-
-	const [bingoCard, setBingoCard] = useState<boolean[][]>(
-		Array.from({ length: 5 }, () => Array.from({ length: 5 }))
-	);
+	const [hasBingo, setHasBingo] = useState(false);
 
 	const setCard = (bingoCardText: string[]) => {
 		const newBingoCard = [...bingoCard];
@@ -72,155 +68,30 @@ const App = () => {
 		return newBingoCardText;
 	};
 
+	const [videoID, setVideoID] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const [videoType, setVideoType] = useState<VideoType>("old");
+
 	useEffect(() => {
 		setCard(shuffle());
 	}, []);
 
-	const [showConfetti, setShowConfetti] = useState(false);
-	const [hasBingo, setHasBingo] = useState(false);
-
-	const checkForBingo = () => {
-		let bingoDetected = false;
-
-		for (const row of bingoCard) {
-			if (row.every((cell) => cell)) {
-				bingoDetected = true;
-			}
-		}
-
-		for (let column = 0; column < bingoCard.length; column++) {
-			if (bingoCard.every((_, index) => bingoCard[index][column])) {
-				bingoDetected = true;
-			}
-		}
-
-		if (bingoCard.every((row, index) => row[index])) {
-			bingoDetected = true;
-		}
-
-		if (bingoCard.every((row, index) => row[4 - index])) {
-			bingoDetected = true;
-		}
-
-		if (bingoDetected) {
-			setHasBingo(true);
-			setShowConfetti(true);
-			setTimeout(() => setShowConfetti(false), 5000);
-		}
-	};
-
-	const toggleCell = (index: number) => {
-		if (bingoCardText[index] !== "FREE SPACE") {
-			const newBingoCard = [...bingoCard];
-			const row = Math.floor(index / 5);
-			const column = index % 5;
-
-			newBingoCard[row][column] = !newBingoCard[row][column];
-
-			setBingoCard(newBingoCard);
-		}
-	};
-
-	const [videoID, setVideoID] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
-
-	const [videoType, setVideoType] = useState<"old" | "new">("old");
-
-	const handleVideoButtonClick = async (sP: string) => {
-		setIsLoading(true);
-		setVideoID(null);
-
-		const filteredSearchTerms = searchTerms.filter(
-			(searchTerm) => searchTerm.searchParameter === sP
-		);
-		const sT =
-			filteredSearchTerms[
-				Math.floor(Math.random() * filteredSearchTerms.length)
-			];
-
-		setSearchTerm(sT);
-
-		try {
-			const params = new URLSearchParams({
-				query: sT.getKeyPhrase(),
-				sp: sT.searchParameter
-			});
-			const response = await fetch(
-				`/api/ytScraper/?${params.toString()}`
-			);
-			const searchResults = await response.json();
-			const videoIDs = await searchResults.videos;
-			const videoID =
-				videoIDs[Math.floor(Math.random() * videoIDs.length)];
-
-			setVideoID(videoID);
-		} catch (error) {
-			console.error("Error fetching video:", error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
 	return (
 		<div className="bg-slate-950 flex flex-col h-screen justify-center p-2 w-screen">
 			<div className="flex items-center pl-4 w-full">
-				<h1 className="flex-1 font-bold text-4xl">T U B I N G O</h1>
-				<div className="flex flex-1 items-center justify-between max-w-[90vh] px-2">
-					<div className="bg-slate-800 flex gap-2 h-16 p-2 relative rounded-xl">
-						<div
-							className={`absolute bg-slate-900 duration-300 ease-in-out h-12 ${
-								videoType === "old" ? "left-2" : "left-1/2"
-							} rounded-lg transition-all w-[calc(50%-6px)]`}
-						/>
-						<button
-							className="cursor-pointer flex flex-1 items-center justify-center p-4  text-slate-300 text-sm z-10"
-							onClick={() => {
-								setVideoType("old");
-							}}
-						>
-							Old Forgotten Video
-						</button>
-						<button
-							className="cursor-pointer flex flex-1 items-center justify-center p-4 text-slate-300 z-10"
-							onClick={() => {
-								setVideoType("new");
-							}}
-						>
-							Brand New Video
-						</button>
-					</div>
-					<button
-						className={`${
-							hasBingo
-								? "animate-pulse bg-emerald-600/70 hover:bg-emerald-600/80"
-								: "bg-slate-800 hover:bg-slate-700"
-						} cursor-pointer flex font-medium h-16 items-center justify-center p-4 rounded-lg text-slate-300 transition-colors w-44`}
-						onClick={() => {
-							setHasBingo(false);
-							setCard(shuffle());
-						}}
-					>
-						<p className="text-slate-300">Generate New Card</p>
-					</button>
-					<button
-						className={`bg-emerald-600/80 flex font-medium hover:bg-emerald-600 cursor-pointer h-16 items-center justify-center p-4 ${
-							isLoading && "pointer-events-none"
-						} rounded-lg transition-colors w-32`}
-						onClick={() => {
-							handleVideoButtonClick(
-								videoType === "old"
-									? "EgIQAQ=="
-									: "CAISBAgCEAE="
-							);
-						}}
-					>
-						{isLoading ? (
-							<div className="animate-spin border-b-2 border-slate-300 h-4 rounded-full w-4" />
-						) : (
-							<p className="text-slate-300">Get Video</p>
-						)}
-					</button>
-				</div>
+				<h1 className={`flex-1 font-light text-4xl`}>T U B I N G O</h1>
+				<ControlsBar
+					hasBingo={hasBingo}
+					isLoading={isLoading}
+					setCard={setCard}
+					setHasBingo={setHasBingo}
+					setIsLoading={setIsLoading}
+					setVideoID={setVideoID}
+					setVideoType={setVideoType}
+					shuffle={shuffle}
+					videoType={videoType}
+				/>
 			</div>
 			<div className="flex w-full">
 				<div className="flex flex-col flex-1 h-full items-center justify-center w-full">
@@ -251,44 +122,13 @@ const App = () => {
 					</div>
 				</div>
 				<div className="flex flex-col flex-1 gap-2 items-center justify-center p-2 max-w-[90vh]">
-					{showConfetti && (
-						<Confetti
-							colors={["#10b981", "#34d399", "#6ee7b7"]}
-							gravity={0.3}
-							numberOfPieces={200}
-							recycle={false}
-						/>
-					)}
-					<div className="aspect-square bg-slate-950/60 border border-slate-800 grid grid-cols-5 gap-3 p-4 rounded-3xl w-full">
-						{bingoCardText.map((text, index) => {
-							return (
-								<div
-									className={`aspect-square border ${
-										bingoCard[Math.floor(index / 5)][
-											index % 5
-										]
-											? "bg-emerald-600/20 border-emerald-500"
-											: "bg-slate-900/60 border-slate-800 hover:border-emerald-400"
-									} ${
-										hasBingo
-											? "pointer-events-none"
-											: "cursor-pointer"
-									} flex focus-visible:outline-none focus-visible:ring-2 items-center justify-center p-2 rounded-2xl transition-colors`}
-									key={index}
-									onClick={() => {
-										toggleCell(index);
-										checkForBingo();
-									}}
-								>
-									<p
-										className={`leading-tight text-center text-[6px] lg:text-xs xl:text-lg`}
-									>
-										{text}
-									</p>
-								</div>
-							);
-						})}
-					</div>
+					<BingoCard
+						bingoCard={bingoCard}
+						bingoCardText={bingoCardText}
+						hasBingo={hasBingo}
+						onBingo={() => setHasBingo(true)}
+						setBingoCard={setBingoCard}
+					/>
 				</div>
 			</div>
 		</div>
