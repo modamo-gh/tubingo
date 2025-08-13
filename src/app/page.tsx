@@ -4,6 +4,7 @@ import BingoCard from "@/../components/BingoCard";
 import { VideoType } from "@/../types/VideoType";
 import { useEffect, useState } from "react";
 import ControlsBar from "../../components/ControlsBar";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const App = () => {
 	const [bingoCard, setBingoCard] = useState<boolean[][]>(
@@ -77,23 +78,27 @@ const App = () => {
 		setCard(shuffle());
 	}, []);
 
+	const { width } = useWindowSize();
+
 	return (
 		<div className="bg-slate-950 flex flex-col h-screen justify-center p-2 w-screen">
 			<div className="flex items-center pl-4 w-full">
 				<h1 className={`flex-1 font-light text-4xl`}>T U B I N G O</h1>
-				<ControlsBar
-					hasBingo={hasBingo}
-					isLoading={isLoading}
-					setCard={setCard}
-					setHasBingo={setHasBingo}
-					setIsLoading={setIsLoading}
-					setVideoID={setVideoID}
-					setVideoType={setVideoType}
-					shuffle={shuffle}
-					videoType={videoType}
-				/>
+				{width >= 768 && (
+					<ControlsBar
+						hasBingo={hasBingo}
+						isLoading={isLoading}
+						setCard={setCard}
+						setHasBingo={setHasBingo}
+						setIsLoading={setIsLoading}
+						setVideoID={setVideoID}
+						setVideoType={setVideoType}
+						shuffle={shuffle}
+						videoType={videoType}
+					/>
+				)}
 			</div>
-			<div className="flex w-full">
+			<div className="flex flex-col md:flex-row w-full">
 				<div className="flex flex-col flex-1 h-full items-center justify-center w-full">
 					<div className="bg-slate-900/60 border border-slate-800 p-3 rounded-3xl w-full">
 						<div className="aspect-video">
@@ -121,6 +126,21 @@ const App = () => {
 						</div>
 					</div>
 				</div>
+				{
+					width < 768 &&
+					<ControlsBar
+						hasBingo={hasBingo}
+						isLoading={isLoading}
+						setCard={setCard}
+						setHasBingo={setHasBingo}
+						setIsLoading={setIsLoading}
+						setVideoID={setVideoID}
+						setVideoType={setVideoType}
+						shuffle={shuffle}
+						videoType={videoType}
+					/>
+
+				}
 				<div className="flex flex-col flex-1 gap-2 items-center justify-center p-2 max-w-[90vh]">
 					<BingoCard
 						bingoCard={bingoCard}

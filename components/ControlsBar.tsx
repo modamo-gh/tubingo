@@ -28,7 +28,7 @@ const ControlsBar = ({
 	videoType
 }: ControlsBarProps) => {
 	return (
-		<div className="flex flex-1 items-center justify-between max-w-[90vh] px-2">
+		<div className={`flex flex-1 items-center justify-between max-w-[90vh] px-2`}>
 			<DiscoveryToggle
 				setVideoType={setVideoType}
 				videoType={videoType}

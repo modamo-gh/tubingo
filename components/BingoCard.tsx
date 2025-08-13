@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import Confetti from "react-confetti";
+import AutoFitText from "./AutoFitText";
 
 interface BingoCardProps {
 	bingoCard: boolean[][];
@@ -61,7 +62,7 @@ const BingoCard = ({
 	};
 
 	return (
-		<>
+		<div className="w-full">
 			{showConfetti && (
 				<Confetti
 					colors={["#10b981", "#34d399", "#6ee7b7"]}
@@ -70,35 +71,29 @@ const BingoCard = ({
 					recycle={false}
 				/>
 			)}
-			<div className="aspect-square bg-slate-950/60 border border-slate-800 grid grid-cols-5 gap-3 p-4 rounded-3xl w-full">
+			<div className="aspect-square bg-slate-950/60 border border-slate-800 grid grid-cols-5 gap-2 p-4 rounded-3xl w-full">
 				{bingoCardText.map((text, index) => {
 					return (
 						<div
-							className={`aspect-square border ${
-								bingoCard[Math.floor(index / 5)][index % 5]
-									? "bg-emerald-600/20 border-emerald-500"
-									: "bg-slate-900/60 border-slate-800 hover:border-emerald-400"
-							} ${
-								hasBingo
+							className={`aspect-square border ${bingoCard[Math.floor(index / 5)][index % 5]
+								? "bg-emerald-600/20 border-emerald-500"
+								: "bg-slate-900/60 border-slate-800 hover:border-emerald-400"
+								} ${hasBingo
 									? "pointer-events-none"
 									: "cursor-pointer"
-							} flex focus-visible:outline-none focus-visible:ring-2 items-center justify-center p-2 rounded-2xl transition-colors`}
+								} flex focus-visible:outline-none focus-visible:ring-2 items-center justify-center p-1 rounded-2xl transition-colors`}
 							key={index}
 							onClick={() => {
 								toggleCell(index);
 								checkForBingo();
 							}}
 						>
-							<p
-								className={`leading-tight text-center text-[6px] lg:text-xs xl:text-lg`}
-							>
-								{text}
-							</p>
+							<AutoFitText text={text} />
 						</div>
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 };
 
