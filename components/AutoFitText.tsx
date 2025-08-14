@@ -39,8 +39,6 @@ const fitText = (el: HTMLElement, max: number, min: number) => {
 
         const fits = textWidth <= containerWidth && textHeight <= containerHeight;
 
-        console.log(`Testing ${mid}px: text=${textWidth}x${textHeight}, container=${containerWidth}x${containerHeight}, fits=${fits}`);
-
         if (fits) {
             best = mid;
             low = mid + 1;
@@ -49,7 +47,6 @@ const fitText = (el: HTMLElement, max: number, min: number) => {
         }
     }
 
-    console.log('Final font size:', best);
     el.style.fontSize = `${best}px`;
 };
 
