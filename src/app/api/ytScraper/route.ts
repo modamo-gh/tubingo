@@ -63,9 +63,16 @@ export const GET = async (request: NextRequest) => {
 			message: `Successfully searched for: ${query}`,
 			videos
 		});
-	} catch (error) {
+	} catch (error: unknown) {
 		console.error("Error:", error);
 
-		return NextResponse.json({ success: false, error: error.message });
+		const message =
+			error instanceof Error
+				? error.message
+				: typeof error === "string"
+				? error
+				: JSON.stringify(error);
+
+		return NextResponse.json({ success: false, error: message });
 	}
 };
