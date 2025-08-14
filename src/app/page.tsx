@@ -81,9 +81,9 @@ const App = () => {
 	const { width } = useWindowSize();
 
 	return (
-		<div className="bg-slate-950 flex flex-col h-screen justify-center p-2 w-screen">
-			<div className="flex items-center pl-4 w-full">
-				<h1 className={`flex-1 font-light text-4xl`}>T U B I N G O</h1>
+		<div className="bg-slate-950 flex flex-col gap-2 h-screen justify-center p-2 w-screen">
+			<div className="flex gap-2 items-center w-full">
+				<h1 className={`flex-1 font-light text-center text-4xl`}>T U B I N G O</h1>
 				{width >= 768 && (
 					<ControlsBar
 						hasBingo={hasBingo}
@@ -98,7 +98,7 @@ const App = () => {
 					/>
 				)}
 			</div>
-			<div className="flex flex-col md:flex-row w-full">
+			<div className="flex flex-col gap-2 md:flex-row w-full">
 				<div className="flex flex-col flex-1 h-full items-center justify-center w-full">
 					<div className="bg-slate-900/60 border border-slate-800 p-3 rounded-3xl w-full">
 						<div className="aspect-video">
@@ -141,7 +141,7 @@ const App = () => {
 					/>
 
 				}
-				<div className="flex flex-col flex-1 gap-2 items-center justify-center p-2 max-w-[90vh]">
+				<div className="flex flex-col flex-1 gap-2 items-center justify-center max-w-[90vh]">
 					<BingoCard
 						bingoCard={bingoCard}
 						bingoCardText={bingoCardText}

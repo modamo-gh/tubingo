@@ -3,14 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 import { VideoType } from "@/../types/VideoType";
 
 interface GetVideoButtonProps {
-    isLoading: boolean;
-    setIsLoading: Dispatch<SetStateAction<boolean>>
-    setVideoID: Dispatch<SetStateAction<string | null>>;
-    videoType: VideoType;
+	isLoading: boolean;
+	setIsLoading: Dispatch<SetStateAction<boolean>>
+	setVideoID: Dispatch<SetStateAction<string | null>>;
+	videoType: VideoType;
 }
 
-const GetVideoButton = ({isLoading, setIsLoading, setVideoID, videoType}: GetVideoButtonProps) => {
-    const handleVideoButtonClick = async (sP: string) => {
+const GetVideoButton = ({ isLoading, setIsLoading, setVideoID, videoType }: GetVideoButtonProps) => {
+	const handleVideoButtonClick = async (sP: string) => {
 		setIsLoading(true);
 		setVideoID(null);
 
@@ -19,7 +19,7 @@ const GetVideoButton = ({isLoading, setIsLoading, setVideoID, videoType}: GetVid
 		);
 		const sT =
 			filteredSearchTerms[
-				Math.floor(Math.random() * filteredSearchTerms.length)
+			Math.floor(Math.random() * filteredSearchTerms.length)
 			];
 
 		try {
@@ -45,9 +45,8 @@ const GetVideoButton = ({isLoading, setIsLoading, setVideoID, videoType}: GetVid
 
 	return (
 		<button
-			className={`bg-emerald-600/80 flex font-medium hover:bg-emerald-600 cursor-pointer h-16 items-center justify-center p-4 ${
-				isLoading && "pointer-events-none"
-			} rounded-lg transition-colors w-32`}
+			className={`bg-emerald-600/80 flex font-medium hover:bg-emerald-600 cursor-pointer h-full items-center justify-center w-full p-4 ${isLoading && "pointer-events-none"
+				} rounded-lg text-xs md:text-base transition-colors`}
 			onClick={() => {
 				handleVideoButtonClick(
 					videoType === "old" ? "EgIQAQ==" : "CAISBAgCEAE="

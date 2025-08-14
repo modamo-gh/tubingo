@@ -13,7 +13,7 @@ const DiscoveryButton = ({
 }: DiscoveryButtonProps) => {
 	return (
 		<button
-			className="cursor-pointer flex flex-1 items-center justify-center p-4 text-slate-300 z-10"
+			className="cursor-pointer flex flex-1 items-center justify-center text-xs md:text-base text-slate-300 z-10"
 			onClick={() => {
 				setVideoType(videoType);
 			}}

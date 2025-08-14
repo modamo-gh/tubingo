@@ -28,23 +28,29 @@ const ControlsBar = ({
 	videoType
 }: ControlsBarProps) => {
 	return (
-		<div className={`flex flex-1 items-center justify-between max-w-[90vh] px-2`}>
-			<DiscoveryToggle
-				setVideoType={setVideoType}
-				videoType={videoType}
-			/>
-			<GenerateCardButton
-				hasBingo={hasBingo}
-				setCard={setCard}
-				setHasBingo={() => setHasBingo(false)}
-				shuffle={shuffle}
-			/>
-			<GetVideoButton
-				isLoading={isLoading}
-				setIsLoading={setIsLoading}
-				setVideoID={setVideoID}
-				videoType={videoType}
-			/>
+		<div className="flex flex-1 gap-2 h-12 items-center justify-between max-w-[90vh]">
+			<div className="flex flex-1 h-full items-center justify-center">
+				<DiscoveryToggle
+					setVideoType={setVideoType}
+					videoType={videoType}
+				/>
+			</div>
+			<div className="flex flex-1 h-full items-center justify-center">
+				<GenerateCardButton
+					hasBingo={hasBingo}
+					setCard={setCard}
+					setHasBingo={() => setHasBingo(false)}
+					shuffle={shuffle}
+				/>
+			</div>
+			<div className="flex flex-1 h-full items-center justify-center">
+				<GetVideoButton
+					isLoading={isLoading}
+					setIsLoading={setIsLoading}
+					setVideoID={setVideoID}
+					videoType={videoType}
+				/>
+			</div>
 		</div>
 	);
 };

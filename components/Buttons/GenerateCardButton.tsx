@@ -19,7 +19,7 @@ const GenerateCardButton = ({
 				hasBingo
 					? "animate-pulse bg-emerald-600/70 hover:bg-emerald-600/80"
 					: "bg-slate-800 hover:bg-slate-700"
-			} cursor-pointer flex font-medium h-16 items-center justify-center p-4 rounded-lg text-slate-300 transition-colors w-44`}
+			} cursor-pointer flex font-medium h-full items-center justify-center min-h-12 w-full p-4 rounded-lg text-slate-300 text-[8px] lg:text-xs transition-colors`}
 			onClick={() => {
 				setHasBingo(false);
 				setCard(shuffle());
