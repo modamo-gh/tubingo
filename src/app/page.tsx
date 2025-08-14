@@ -3,8 +3,9 @@
 import BingoCard from "@/../components/BingoCard";
 import { VideoType } from "@/../types/VideoType";
 import { useEffect, useState } from "react";
-import ControlsBar from "../../components/ControlsBar";
-import useWindowSize from "../../hooks/useWindowSize";
+import ControlsBar from "@/../components/ControlsBar";
+import useWindowSize from "@/../hooks/useWindowSize";
+import SocialFooter from "@/../components/SocialFooter";
 
 const App = () => {
 	const [bingoCard, setBingoCard] = useState<boolean[][]>(
@@ -141,7 +142,7 @@ const App = () => {
 					/>
 
 				}
-				<div className="flex flex-col flex-1 gap-2 items-center justify-center max-w-[90vh]">
+				<div className="flex flex-col flex-1 gap-2 items-center justify-center max-w-[85vh]">
 					<BingoCard
 						bingoCard={bingoCard}
 						bingoCardText={bingoCardText}
@@ -151,6 +152,7 @@ const App = () => {
 					/>
 				</div>
 			</div>
+			<SocialFooter/>
 		</div>
 	);
 };

@@ -10,7 +10,7 @@ const DiscoveryToggle = ({ videoType, setVideoType }: DiscoveryToggleProps) => {
 	return (
 		<div className="bg-slate-800 flex h-full items-center w-full relative rounded-xl">
 			<div
-				className={`absolute bg-slate-900 duration-300 ease-in-out h-12 ${
+				className={`absolute bg-slate-900 duration-300 ease-in-out h-full ${
 					videoType === "old" ? "left-0" : "left-1/2"
 				} rounded-lg transition-all w-1/2`}
 			/>
