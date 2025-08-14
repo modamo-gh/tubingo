@@ -84,7 +84,9 @@ const App = () => {
 	return (
 		<div className="bg-slate-950 flex flex-col gap-2 h-screen justify-center p-2 w-screen">
 			<div className="flex gap-2 items-center w-full">
-				<h1 className={`flex-1 font-light text-center text-4xl`}>T U B I N G O</h1>
+				<h1 className={`flex-1 font-light text-center text-4xl`}>
+					T U B I N G O
+				</h1>
 				{width >= 768 && (
 					<ControlsBar
 						hasBingo={hasBingo}
@@ -118,8 +120,7 @@ const App = () => {
 										<div className="animate-spin border-b-2 border-slate-300 h-12 rounded-full w-12" />
 									) : (
 										<p>
-											Click below to get a new or old
-											video
+											{`Click "New Video" to get a random video`}
 										</p>
 									)}
 								</div>
@@ -127,8 +128,7 @@ const App = () => {
 						</div>
 					</div>
 				</div>
-				{
-					width < 768 &&
+				{width < 768 && (
 					<ControlsBar
 						hasBingo={hasBingo}
 						isLoading={isLoading}
@@ -140,8 +140,7 @@ const App = () => {
 						shuffle={shuffle}
 						videoType={videoType}
 					/>
-
-				}
+				)}
 				<div className="flex flex-col flex-1 gap-2 items-center justify-center max-w-[85vh]">
 					<BingoCard
 						bingoCard={bingoCard}
@@ -152,7 +151,7 @@ const App = () => {
 					/>
 				</div>
 			</div>
-			<SocialFooter/>
+			<SocialFooter />
 		</div>
 	);
 };
