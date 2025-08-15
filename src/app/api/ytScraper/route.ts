@@ -61,7 +61,7 @@ export const GET = async (request: NextRequest) => {
 
 		let upperBound = 1;
 
-		for(let i = 0; i < 11; i++){
+		for (let i = 0; i < 11; i++) {
 			const lowViews = filteredVideos.filter(
 				(video) => parseViews(video) < upperBound
 			);
@@ -69,12 +69,14 @@ export const GET = async (request: NextRequest) => {
 			if (!lowViews.length) {
 				upperBound *= 10;
 			} else {
-				const video = lowViews[Math.floor(Math.random() * lowViews.length)];
+				const video =
+					lowViews[Math.floor(Math.random() * lowViews.length)];
 
 				console.log(video);
 
 				return NextResponse.json({
 					success: true,
+					viewCount: parseViews(video),
 					videoID: video.video_id
 				});
 			}

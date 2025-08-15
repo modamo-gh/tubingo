@@ -5,14 +5,18 @@ import { VideoType } from "@/../types/VideoType";
 interface GetVideoButtonProps {
 	isLoading: boolean;
 	setIsLoading: Dispatch<SetStateAction<boolean>>;
+	setQuery: Dispatch<string | null>;
 	setVideoID: Dispatch<SetStateAction<string | null>>;
+	setViewCount: Dispatch<SetStateAction<number>>;
 	videoType: VideoType;
 }
 
 const GetVideoButton = ({
 	isLoading,
 	setIsLoading,
+	setQuery,
 	setVideoID,
+	setViewCount,
 	videoType
 }: GetVideoButtonProps) => {
 	const handleVideoButtonClick = async () => {
@@ -29,17 +33,18 @@ const GetVideoButton = ({
 			];
 
 		try {
-			const params = new URLSearchParams({
-				query: sT.getKeyPhrase(),
-				videoType
-			});
+			const query = sT.getKeyPhrase();
+
+			setQuery(query);
+
+			const params = new URLSearchParams({ query, videoType });
 			const response = await fetch(
 				`/api/ytScraper/?${params.toString()}`
 			);
 			const json = await response.json();
-			const videoID = json.videoID;
-
-			setVideoID(videoID);
+			
+			setVideoID(json.videoID);
+			setViewCount(json.viewCount)
 		} catch (error) {
 			console.error("Error fetching video:", error);
 		} finally {

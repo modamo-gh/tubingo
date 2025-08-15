@@ -13,7 +13,9 @@ interface ControlsBarProps {
 	videoType: VideoType;
 	isLoading: boolean;
 	setIsLoading: Dispatch<SetStateAction<boolean>>;
+	setQuery: Dispatch<SetStateAction<string | null>>;
 	setVideoID: Dispatch<SetStateAction<string | null>>;
+	setViewCount: Dispatch<SetStateAction<number>>;
 }
 
 const ControlsBar = ({
@@ -22,8 +24,10 @@ const ControlsBar = ({
 	setCard,
 	setHasBingo,
 	setIsLoading,
+	setQuery,
 	setVideoID,
 	setVideoType,
+	setViewCount,
 	shuffle,
 	videoType
 }: ControlsBarProps) => {
@@ -47,7 +51,9 @@ const ControlsBar = ({
 				<GetVideoButton
 					isLoading={isLoading}
 					setIsLoading={setIsLoading}
+					setQuery={setQuery}
 					setVideoID={setVideoID}
+					setViewCount={setViewCount}
 					videoType={videoType}
 				/>
 			</div>

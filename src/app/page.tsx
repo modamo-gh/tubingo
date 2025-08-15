@@ -39,6 +39,13 @@ const App = () => {
 		"Conspiracy Theory"
 	]);
 	const [hasBingo, setHasBingo] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [query, setQuery] = useState<string | null>(null);
+	const [videoID, setVideoID] = useState<string | null>(null);
+	const [videoType, setVideoType] = useState<VideoType>("old");
+	const [viewCount, setViewCount] = useState(0);
+
+	const { width } = useWindowSize();
 
 	const setCard = (bingoCardText: string[]) => {
 		const newBingoCard = [...bingoCard];
@@ -70,16 +77,9 @@ const App = () => {
 		return newBingoCardText;
 	};
 
-	const [videoID, setVideoID] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
-
-	const [videoType, setVideoType] = useState<VideoType>("old");
-
 	useEffect(() => {
 		setCard(shuffle());
 	}, []);
-
-	const { width } = useWindowSize();
 
 	return (
 		<div className="bg-slate-950 flex flex-col gap-2 h-screen justify-center p-2 w-screen">
@@ -94,8 +94,10 @@ const App = () => {
 						setCard={setCard}
 						setHasBingo={setHasBingo}
 						setIsLoading={setIsLoading}
+						setQuery={setQuery}
 						setVideoID={setVideoID}
 						setVideoType={setVideoType}
+						setViewCount={setViewCount}
 						shuffle={shuffle}
 						videoType={videoType}
 					/>
@@ -106,21 +108,29 @@ const App = () => {
 					<div className="bg-slate-900/60 border border-slate-800 p-3 rounded-3xl w-full">
 						<div className="aspect-video">
 							{videoID ? (
-								<iframe
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-									allowFullScreen
-									className="rounded-3xl"
-									height="100%"
-									src={`https://www.youtube.com/embed/${videoID}`}
-									width="100%"
-								/>
+								<>
+									<iframe
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+										className="rounded-3xl"
+										height="100%"
+										src={`https://www.youtube.com/embed/${videoID}`}
+										width="100%"
+									/>
+									<div className="flex items-center justify-around mt-2 w-full">
+										<p>{`Query: ${query}`}</p>
+										<p>{`View Count: ${viewCount}`}</p>
+									</div>
+								</>
 							) : (
 								<div className="bg-slate-900/60 flex items-center justify-center h-full rounded-3xl w-full">
 									{isLoading ? (
 										<div className="animate-spin border-b-2 border-slate-300 h-12 rounded-full w-12" />
 									) : (
 										<p>
-											{`Click "New Video" to get a random video`}
+											{!query
+												? `Click "New Video" to get a random video`
+												: `Wow, no videos found for ${query} 😔 Try again`}
 										</p>
 									)}
 								</div>
@@ -135,8 +145,10 @@ const App = () => {
 						setCard={setCard}
 						setHasBingo={setHasBingo}
 						setIsLoading={setIsLoading}
+						setQuery={setQuery}
 						setVideoID={setVideoID}
 						setVideoType={setVideoType}
+						setViewCount={setViewCount}
 						shuffle={shuffle}
 						videoType={videoType}
 					/>
