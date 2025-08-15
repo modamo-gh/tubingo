@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { chromium } from "playwright";
+import Innertube, { YTNodes } from "youtubei.js";
 
 export const GET = async (request: NextRequest) => {
 	const { searchParams } = new URL(request.url);
 	const query = searchParams.get("query");
-	const sp = searchParams.get("sp");
+	const videoType = searchParams.get("videoType");
+
+	console.log(query, videoType);
 
 	if (!query) {
 		return NextResponse.json(
@@ -13,56 +15,70 @@ export const GET = async (request: NextRequest) => {
 		);
 	}
 
-	if (!sp) {
-		return NextResponse.json(
-			{ success: false, error: "Missing ?sp" },
-			{ status: 400 }
-		);
-	}
-
 	try {
-		const browser = await chromium.launch({ headless: true });
-		const page = await browser.newPage();
-		const url = new URL("https://www.youtube.com/results");
+		const youTube = await Innertube.create();
 
-		url.searchParams.set("search_query", query);
-		url.searchParams.set("sp", sp);
+		let search = await youTube.search(
+			query,
+			videoType === "old"
+				? { type: "video" }
+				: {
+						sort_by: "upload_date",
+						type: "video",
+						upload_date: "today"
+				  }
+		);
+		let videos = [...search.videos];
 
-		await page.goto(url.toString(), {
-			waitUntil: "domcontentloaded",
-			timeout: 60000
-		});
+		if (search.has_continuation) {
+			search = await search.getContinuation();
 
-		await page
-			.locator("ytd-video-renderer")
-			.first()
-			.waitFor({ timeout: 15000 })
-			.catch(() => {});
+			videos = [...videos, ...search.videos];
+		}
 
-		const videos = await page.$$eval(
-			"ytd-video-renderer",
-			(elements: Element[]) => {
-				return elements.map((element) => {
-					const titleElement = element.querySelector(
-						"#video-title"
-					) as HTMLAnchorElement;
-					const href = titleElement?.getAttribute("href");
-					const videoID = href?.match(
-						/(?:watch\?v=|shorts\/)([^&\n?#]+)/
-					)?.[1];
+		const filteredVideos = videos
+			.filter((video) => video.is(YTNodes.Video))
+			.filter((video) => !video.is_watched);
 
-					return videoID;
+		const parseViews = (video: YTNodes.Video) => {
+			const potentialNumber = video.view_count?.text
+				?.split(/\s+/)[0]
+				.trim();
+
+			if (potentialNumber === "No") {
+				return 0;
+			}
+
+			return Number(potentialNumber?.replaceAll(",", ""));
+		};
+
+		if (!filteredVideos.length) {
+			return NextResponse.json({
+				success: false,
+				videoID: null
+			});
+		}
+
+		let upperBound = 1;
+
+		for(let i = 0; i < 11; i++){
+			const lowViews = filteredVideos.filter(
+				(video) => parseViews(video) < upperBound
+			);
+
+			if (!lowViews.length) {
+				upperBound *= 10;
+			} else {
+				const video = lowViews[Math.floor(Math.random() * lowViews.length)];
+
+				console.log(video);
+
+				return NextResponse.json({
+					success: true,
+					videoID: video.video_id
 				});
 			}
-		);
-
-		await browser.close();
-
-		return NextResponse.json({
-			success: true,
-			message: `Successfully searched for: ${query}`,
-			videos
-		});
+		}
 	} catch (error: unknown) {
 		console.error("Error:", error);
 

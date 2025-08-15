@@ -4,36 +4,40 @@ import { VideoType } from "@/../types/VideoType";
 
 interface GetVideoButtonProps {
 	isLoading: boolean;
-	setIsLoading: Dispatch<SetStateAction<boolean>>
+	setIsLoading: Dispatch<SetStateAction<boolean>>;
 	setVideoID: Dispatch<SetStateAction<string | null>>;
 	videoType: VideoType;
 }
 
-const GetVideoButton = ({ isLoading, setIsLoading, setVideoID, videoType }: GetVideoButtonProps) => {
-	const handleVideoButtonClick = async (sP: string) => {
+const GetVideoButton = ({
+	isLoading,
+	setIsLoading,
+	setVideoID,
+	videoType
+}: GetVideoButtonProps) => {
+	const handleVideoButtonClick = async () => {
 		setIsLoading(true);
 		setVideoID(null);
 
 		const filteredSearchTerms = searchTerms.filter(
-			(searchTerm) => searchTerm.searchParameter === sP
+			(searchTerm) => searchTerm.videoType === videoType
 		);
+
 		const sT =
 			filteredSearchTerms[
-			Math.floor(Math.random() * filteredSearchTerms.length)
+				Math.floor(Math.random() * filteredSearchTerms.length)
 			];
 
 		try {
 			const params = new URLSearchParams({
 				query: sT.getKeyPhrase(),
-				sp: sT.searchParameter
+				videoType
 			});
 			const response = await fetch(
 				`/api/ytScraper/?${params.toString()}`
 			);
-			const searchResults = await response.json();
-			const videoIDs = await searchResults.videos;
-			const videoID =
-				videoIDs[Math.floor(Math.random() * videoIDs.length)];
+			const json = await response.json();
+			const videoID = json.videoID;
 
 			setVideoID(videoID);
 		} catch (error) {
@@ -45,12 +49,11 @@ const GetVideoButton = ({ isLoading, setIsLoading, setVideoID, videoType }: GetV
 
 	return (
 		<button
-			className={`bg-emerald-600/80 flex font-medium hover:bg-emerald-600 cursor-pointer h-full items-center justify-center w-full p-4 ${isLoading && "pointer-events-none"
-				} rounded-lg text-xs md:text-base transition-colors`}
+			className={`bg-emerald-600/80 flex font-medium hover:bg-emerald-600 cursor-pointer h-full items-center justify-center w-full p-4 ${
+				isLoading && "pointer-events-none"
+			} rounded-lg text-xs md:text-base transition-colors`}
 			onClick={() => {
-				handleVideoButtonClick(
-					videoType === "old" ? "EgIQAQ==" : "CAISBAgCEAE="
-				);
+				handleVideoButtonClick();
 			}}
 		>
 			{isLoading ? (

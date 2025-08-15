@@ -1,13 +1,11 @@
 export const searchTerms = [
 	{
 		getKeyPhrase: () => "IMG",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => "MVI",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
@@ -17,8 +15,7 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
@@ -28,8 +25,7 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
@@ -39,19 +35,14 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
 			`${String(new Date().getMonth() + 1).padStart(2, "0")}${String(
 				new Date().getDate()
 			).padStart(2, "0")}${new Date().getFullYear()}`,
-
-		searchParameter: "CAISBAgCEAE=",
-		toString: function () {
-			return `${this.getKeyPhrase}() ${this.searchParameter}`;
-		}
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
@@ -61,36 +52,30 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
 			`${String(new Date().getDate()).padStart(2, "0")}${String(
 				new Date().getMonth() + 1
 			).padStart(2, "0")}${new Date().getFullYear()}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => "My Movie",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => "My Edited Video",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => "/Storage/Emulated/",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => "PXL",
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
@@ -100,206 +85,169 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `WhatsApp Video ${new Date().getFullYear()}`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `FullSizeRender`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `RPReplay`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `VTS 01`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `DVR`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `SWF`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `VLC Record`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `Robloxapp`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.MP4`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.3GP`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.MOV`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.AVI`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.WMV`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.MKV`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.MPEG`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.FLV`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.FLAC`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () => `.WAV`,
-
-		searchParameter: "CAISBAgCEAE="
+		videoType: "new"
 	},
 	{
 		getKeyPhrase: () =>
 			`IMG ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`MVI ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`MOV ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`100 ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`SAM ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`DSC ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`SDV ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`DSCF${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`DSCN${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`PICT${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`MAQ0${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`FILE${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`GOPR${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`GP01${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`GX01${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`DJI ${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`HNI 0${String(Math.floor(Math.random() * 101)).padStart(3, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`WA0${String(Math.floor(Math.random() * 1000)).padStart(3, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -307,13 +255,12 @@ export const searchTerms = [
 				.toString(16)
 				.toUpperCase()
 				.padStart(2, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`MOL0${String(Math.floor(Math.random() * 101)).padStart(4, "0")}`,
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -322,8 +269,7 @@ export const searchTerms = [
 			).padStart(2, "0")}${String(
 				Math.floor(Math.random() * 60)
 			).padStart(2, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -334,8 +280,7 @@ export const searchTerms = [
 							Math.floor(Math.random() * 80000) + 20000
 					  ).padStart(5, "0")
 			}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -343,8 +288,7 @@ export const searchTerms = [
 				2,
 				"0"
 			)} ${String(Math.floor(Math.random() * 10))}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -352,8 +296,7 @@ export const searchTerms = [
 				3,
 				"0"
 			)} 1`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -361,13 +304,11 @@ export const searchTerms = [
 				3,
 				"0"
 			)}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => "My Slideshow",
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
@@ -375,26 +316,22 @@ export const searchTerms = [
 				2,
 				"0"
 			)}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => "My Slideshow Video",
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => "My Stupeflix Video",
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () =>
 			`My Stupeflix Video ${String(
 				Math.floor(Math.random() * 1051)
 			).padStart(4, "0")}`,
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -411,8 +348,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -429,8 +365,7 @@ export const searchTerms = [
 				randDate.getDate()
 			).padStart(2, "0")}${randDate.getFullYear()}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -447,8 +382,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${randDate.getFullYear()}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -465,8 +399,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -483,8 +416,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -501,8 +433,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -519,8 +450,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -537,8 +467,7 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	},
 	{
 		getKeyPhrase: () => {
@@ -555,7 +484,6 @@ export const searchTerms = [
 				randDate.getMonth() + 1
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
-
-		searchParameter: "EgIQAQ=="
+		videoType: "old"
 	}
 ];
