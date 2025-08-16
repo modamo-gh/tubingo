@@ -485,5 +485,74 @@ export const searchTerms = [
 			).padStart(2, "0")}${String(randDate.getDate()).padStart(2, "0")}`;
 		},
 		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "You have new Picture Mail! (video)",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "Media1.3gp",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "Media1.3g2",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "Video.3g2",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "New Multimedia Message",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "Multimedia Message",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => "Video From My Phone",
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () =>
+			`Video${Math.floor(Math.random() * 11)
+				.toString()
+				.padStart(3, "0")}`,
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () =>
+			`Vid${Math.floor(Math.random() * 11)
+				.toString()
+				.padStart(3, "0")}`,
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () =>
+			`MOV0${Math.floor(Math.random() * 11)
+				.toString()
+				.padStart(4, "0")}`,
+		videoType: "old"
+	},
+	{
+		getKeyPhrase: () => {
+			const startYear = 2006;
+			const start = new Date(startYear, 0, 1);
+			const end = new Date();
+
+			const randTime =
+				start.getTime() +
+				Math.random() * (end.getTime() - start.getTime());
+			const randDate = new Date(randTime);
+
+			return `For ${randDate.toLocaleDateString("en-US", {
+				month: "long"
+			})} ${String(randDate.getDate()).padStart(
+				2,
+				"0"
+			)}, ${randDate.getFullYear()}`;
+		},
+		videoType: "old"
 	}
 ];
